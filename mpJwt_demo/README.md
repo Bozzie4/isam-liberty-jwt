@@ -1,8 +1,9 @@
 # mp-jwt-sample-app
 
-This is an updated version of the mp-jwt-sample-app, to work with ISAM.
+-----------
+This is an updated version of the mp-jwt-sample-app (<https://github.com/ayoho/mp-jwt-sample-app>), to work with IBM Verify Access.
 
-
+-----------
 Welcome to the MP JWT Sample Application! This application demonstrates some of the capabilities of the MicroProfile JWT specification, specifically the new features of the MP JWT 1.2 specification and the corresponding feature in the Open Liberty application server.
 
 - [Run it now](#run-it-now)
