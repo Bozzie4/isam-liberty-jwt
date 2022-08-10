@@ -1,0 +1,46 @@
+#THIS IS THE LIGHT IMAGE BASED ON UBUNTU
+# There is also an image based on ubi
+FROM docker.io/library/open-liberty:kernel-slim-java17-openj9
+
+ARG NAME=openidtest
+ARG VERSION=v1.0.0
+
+ENV TZ=Europe/Brussels \
+	APP_NAME="$NAME"
+
+LABEL \
+	org.opencontainers.image.authors="Tom Bosmans" \
+	org.opencontainers.image.vendor="Open Liberty" \
+	org.opencontainers.image.url="" \
+	org.opencontainers.image.source="" \
+	org.opencontainers.image.version="$VERSION" \
+	vendor="Open Liberty" \
+	name="$NAME" \
+	version="$VERSION" \
+	summary="$NAME" \
+	description="Open Liberty runtime with $NAME."
+
+USER root
+
+#==========================
+# Add trusted certificates on Ubuntu - must be named *.crt !!!
+#========================
+ADD ["isam.crt", \
+	"/usr/local/share/ca-certificates/"]
+# Run update for ca trust - f0cabfe5.0
+RUN update-ca-certificates --verbose
+
+#USER 1001
+USER default
+#
+# Default adding cert_defaultKeyStore
+#     You can overwrite these in Podman, Docker or OpenShift
+ENV cert_defaultKeyStore=/etc/ssl/certs/ca-certificates.crt
+
+COPY --chown=1001:0 /src/main/liberty/config /config
+
+RUN features.sh
+
+COPY --chown=1001:0 ear/*.ear /config/dropins
+
+RUN configure.sh

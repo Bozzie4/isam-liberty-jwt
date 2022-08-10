@@ -1,0 +1,24 @@
+<server>
+
+    <featureManager>
+        <feature>microProfile-5.0</feature>
+    </featureManager>
+
+    <variable name="default.http.port" defaultValue="9080"/>
+    <variable name="default.https.port" defaultValue="9443"/>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+        host="*"
+        httpPort="${default.http.port}"
+        httpsPort="${default.https.port}" />
+
+    <webApplication location="mp-jwt-app.war" contextRoot="/"/>
+
+      <mpJwt id="testJWT"
+        issuer="https://issuer"
+        jwksUri="https://isam.tombosmans.eu:444/jwks.json"
+        tokenHeader="Authorization"
+        userNameAttribute="sub"
+      />
+  <logging traceSpecification="com.ibm.ws.security.jwt.*=all" />
+</server>

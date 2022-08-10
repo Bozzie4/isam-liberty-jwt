@@ -1,0 +1,41 @@
+<server description="Openidconnect client ISAM test">
+
+  <featureManager>
+    <feature>openidConnectClient-1.0</feature>
+    <feature>servlet-5.0</feature>
+  </featureManager>
+
+  <variable name="default.http.port" defaultValue="9081"/>
+  <variable name="default.https.port" defaultValue="9443"/>
+
+  <httpEndpoint id="defaultHttpEndpoint"
+    host="*"
+    httpPort="${default.http.port}"
+    httpsPort="${default.https.port}" />
+
+<!-- disableLtpaCookie="true" -> this is the whole point -->
+<openidConnectClient
+ id="TBJWT"
+ inboundPropagation="required"
+ issuerIdentifier="https://issuer"
+ audiences="ALL_AUDIENCES"
+ signatureAlgorithm="RS256"
+ jwkEndpointUrl="https://isam.tombosmans.eu:444/jwks.json"
+ realmName="defaultRealm"
+ groupIdentifier="groups"
+ headerName="jwt"
+ mapIdentityToRegistryUser="false"
+ accessTokenCacheEnabled="true"
+ accessTokenCacheTimeout="10s"
+ tokenReuse="true"
+ disableLtpaCookie="true"
+/>
+
+  <applicationManager autoExpand="true"/>
+
+  <!-- enterpriseApplication id="SubjectDumper"
+  location="SubjectDumperEAR.ear"
+  name="SubjectDumperEAR" / -->
+  <logging traceSpecification="com.ibm.ws.security.jwt.*=all" />
+</server>
+

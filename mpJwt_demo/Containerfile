@@ -1,0 +1,41 @@
+#THIS IS THE LIGHT IMAGE, BUT THEN WE DON'T HAVE FEATURES (Ubuntu based)
+FROM docker.io/library/open-liberty:kernel-slim-java17-openj9
+
+LABEL \
+  org.opencontainers.image.authors="Tom Bosmans" \
+  org.opencontainers.image.vendor="IBM" \
+  org.opencontainers.image.url="local" \
+  org.opencontainers.image.source="https://github.com/OpenLiberty/guide-getting-started" \
+  org.opencontainers.image.version="$VERSION" \
+  org.opencontainers.image.revision="$REVISION" \
+  vendor="Open Liberty" \
+  name="system" \
+  version="$VERSION-$REVISION" \
+  summary="The mp-jwt-sample-app" \
+  description="This image contains the system microservice running with the Open Liberty runtime."
+
+ENV TZ=Europe/Brussels
+#
+#  Add signer cert for isam f0cabfe5.0
+#
+COPY isam.crt /usr/local/share/ca-certificates/
+
+USER root
+# Run update for ca trust
+RUN update-ca-certificates --verbose
+
+USER default
+#
+# Default adding cert_defaultKeyStore
+#       You can overwrite these in Podman, Docker or OpenShift
+ENV cert_defaultKeyStore=/etc/ssl/certs/ca-certificates.crt
+
+COPY --chown=default:0 /src/main/liberty/config /config
+
+#-> this does not work if you don't have internet access
+# You may want to use a different liberty image in that case
+RUN features.sh
+
+COPY --chown=default:0 target/*.war /config/apps
+
+RUN configure.sh
