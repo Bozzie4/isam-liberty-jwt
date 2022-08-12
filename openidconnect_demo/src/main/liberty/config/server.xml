@@ -26,7 +26,7 @@
  headerName="jwt"
  mapIdentityToRegistryUser="false"
  accessTokenCacheEnabled="true"
- accessTokenCacheTimeout="10s"
+ accessTokenCacheTimeout="300s"
  tokenReuse="true"
  disableLtpaCookie="true"
 />
