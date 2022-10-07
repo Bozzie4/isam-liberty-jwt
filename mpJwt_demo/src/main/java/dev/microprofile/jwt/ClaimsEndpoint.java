@@ -38,7 +38,7 @@ public class ClaimsEndpoint {
     @Path("test")
 
     public String getTest() {
-        return "issuer: " + issuer + "\n<br/>browser:" + claimBrowserInfo + "\n<br/>registry id:" + claimRegistryId;
+        return "<h1>test</h1>issuer: " + issuer + "\n<br/>browser:" + claimBrowserInfo + "\n<br/>registry id:" + claimRegistryId;
     }
     @GET
     @RolesAllowed("Echoer")
@@ -49,6 +49,6 @@ public class ClaimsEndpoint {
         if (callerPrincipal == null) {
           return "user="+user.getName();
         }
-        return "user="+user.getName() + "\n" + callerPrincipal.getRawToken() + "\n<br/>claim: " + callerPrincipal.getClaim("AZN_CRED_PRINCIPAL_UUID");
+        return "<h1>claims, requires echoer role</h1>user="+user.getName() + "\n" + callerPrincipal.getRawToken() + "\n<br/>claim: " + callerPrincipal.getClaim("AZN_CRED_PRINCIPAL_UUID");
     }
 }
