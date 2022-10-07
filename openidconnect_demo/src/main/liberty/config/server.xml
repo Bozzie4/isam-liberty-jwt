@@ -20,7 +20,7 @@
  issuerIdentifier="https://issuer"
  audiences="ALL_AUDIENCES"
  signatureAlgorithm="RS256"
- jwkEndpointUrl="https://isam.tombosmans.eu:444/jwks.json"
+ jwkEndpointUrl="https://isam.tombosmans.eu/jwks.json"
  realmName="defaultRealm"
  groupIdentifier="groups"
  headerName="jwt"

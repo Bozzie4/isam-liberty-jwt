@@ -16,7 +16,7 @@
 
       <mpJwt id="testJWT"
         issuer="https://issuer"
-        jwksUri="https://isam.tombosmans.eu:444/jwks.json"
+        jwksUri="https://isam.tombosmans.eu/jwks.json"
         tokenHeader="Authorization"
         userNameAttribute="sub"
       />
